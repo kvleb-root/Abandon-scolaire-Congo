@@ -1,0 +1,233 @@
+/* Variables CSS pour les thèmes */
+:root {
+  /* Mode clair (par défaut) */
+  --bg-primary: #f8fafc;
+  --bg-secondary: rgba(255, 255, 255, 0.92);
+  --text-primary: #111518;
+  --text-secondary: #637888;
+  --border-color: #dce1e5;
+  --input-bg: #fffbe6;
+  --input-border: #ffd54f;
+  --shadow-color: rgba(31, 38, 135, 0.18);
+  --card-border: rgba(255, 183, 77, 0.25);
+}
+
+/* Mode sombre */
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: rgba(30, 30, 30, 0.95);
+  --text-primary: #e5e5e5;
+  --text-secondary: #a0a0a0;
+  --border-color: #404040;
+  --input-bg: #2a2a2a;
+  --input-border: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --card-border: rgba(255, 183, 77, 0.15);
+}
+
+/* Base font consistency */
+body {
+  font-family: 'Public Sans', 'Noto Sans', sans-serif;
+  /* Subtle background pattern for visual interest */
+  background-color: var(--bg-primary);
+  background-image: linear-gradient(45deg, #f0f3f4 25%, transparent 25%, transparent 75%, #f0f3f4 75%, #f0f3f4),
+                    linear-gradient(45deg, #f0f3f4 25%, transparent 25%, transparent 75%, #f0f3f4 75%, #f0f3f4);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  background: linear-gradient(rgba(30, 41, 59, 0.6), rgba(255, 183, 77, 0.4)),
+    url('https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Mode sombre - ajustement du background */
+[data-theme="dark"] body {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(255, 183, 77, 0.2)),
+    url('https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Enhancements for form inputs on focus */
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #1990e5; /* Primary blue color */
+  box-shadow: 0 0 0 4px rgba(25, 144, 229, 0.25); /* Stronger glow */
+  transition: all 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* Custom radio button styling for consistency and aesthetics */
+input[type="radio"] {
+  /* Hide default radio button */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* Custom dimensions and border */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffb74d;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px; /* Space between radio and label */
+  transition: all 0.2s ease-in-out;
+  background: var(--input-bg);
+}
+
+input[type="radio"]:checked {
+  border-color: #1990e5; /* Blue border when checked */
+  background-color: #1990e5; /* Blue background when checked */
+}
+
+input[type="radio"]:checked::before {
+  content: '';
+  display: block;
+  width: 10px; /* Inner dot size */
+  height: 10px;
+  background-color: var(--input-bg);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="radio"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(25, 144, 229, 0.2); /* Focus glow */
+}
+
+/* Style for submit button feedback */
+.submit-button {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background: linear-gradient(90deg, #1990e5 0%, #ffb74d 100%);
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(25, 144, 229, 0.15);
+    border: none;
+}
+.submit-button:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 16px rgba(255, 183, 77, 0.18);
+}
+.submit-button:active {
+    transform: scale(0.98);
+}
+
+/* Animation for prediction result */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loader Spinner styles */
+.loader {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #1990e5; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation d'apparition du formulaire */
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+section {
+  animation: slideFadeIn 1s cubic-bezier(0.23, 1, 0.32, 1);
+  background: var(--bg-secondary);
+  box-shadow: 0 8px 32px 0 var(--shadow-color);
+  border-radius: 1.5rem;
+  border: 1px solid var(--card-border);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+header, .submit-button {
+  background: linear-gradient(90deg, #1990e5 0%, #ffb74d 100%);
+  color: #fff;
+}
+
+h1, h2 {
+  color: #1990e5;
+  letter-spacing: 0.02em;
+}
+
+label, legend {
+  color: var(--text-primary);
+  transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1), transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+/* Animation sur le focus ou le survol du champ ou du label */
+.form-input:focus + label,
+.form-select:focus + label,
+input[type="radio"]:focus + label,
+input[type="radio"]:checked + label,
+label:hover,
+legend:hover {
+  color: #ff9800;
+  transform: translateY(-4px) scale(1.04);
+}
+
+.form-input, .form-select {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: #ff9800;
+  box-shadow: 0 0 0 4px rgba(255, 183, 77, 0.25);
+}
+
+/* Styles pour le bouton de mode sombre */
+#darkModeToggle {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  transition: all 0.3s ease;
+}
+
+#darkModeToggle:hover {
+  background: var(--border-color);
+  transform: scale(1.05);
+}
+
+/* Mode sombre - ajustements spécifiques */
+[data-theme="dark"] #darkModeToggle {
+  background: #404040;
+  border-color: #555;
+}
+
+[data-theme="dark"] #darkModeToggle:hover {
+  background: #555;
+} 

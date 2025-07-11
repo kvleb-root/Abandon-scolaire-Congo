@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Formulaire d'informations étudiant pour prédire l'abandon scolaire. Interface moderne, accessible et responsive." />
+    <title>Test d'abandon scolaire</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Public+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='img/moi.jpg') }}" />
+  </head>
+  <body class="min-h-screen bg-white font-sans text-[#111518]">
+    <div class="flex flex-col min-h-screen">
+      <main class="flex flex-1 justify-center px-4 py-8">
+        <section class="w-full max-w-xl bg-white rounded-lg shadow-sm p-8">
+          <div class="flex flex-col items-center mb-4">
+            <div class="flex items-center justify-between w-full mb-4">
+              <img src="{{ url_for('static', filename='img/moi.jpg') }}" alt="Logo" style="max-width:80px;max-height:80px;border-radius:50%;box-shadow:0 2px 8px rgba(25,144,229,0.15);" />
+              <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors" title="Basculer le mode sombre">
+                <svg id="sunIcon" class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+                <svg id="moonIcon" class="w-6 h-6 text-gray-600 hidden" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                </svg>
+              </button>
+            </div>
+            <span class="mt-2 text-[#1990e5] text-lg font-semibold tracking-wide text-center">Prédire l'abandon scolaire pour mieux agir</span>
+            <a href="/documentation" class="mt-3 inline-block px-4 py-2 bg-[#1990e5] text-white rounded-lg hover:bg-[#1577c9] transition font-semibold shadow">Voir la documentation</a>
+          </div>
+          <h2 class="text-3xl font-bold mb-6 text-center text-[#111518]">Formulaire d'Informations Étudiant</h2>
+          <form id="predictionForm" class="space-y-6">
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="nom">Nom</label>
+              <input id="nom" name="nom" type="text" placeholder="Entrez le nom de l'étudiant"
+                class="form-input w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5] placeholder:text-[#637888]" required />
+            </div>
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="photo">Photo de l'étudiant</label>
+              <input id="photo" name="photo" type="file" accept="image/*"
+                class="form-input w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5] placeholder:text-[#637888]" />
+              <div id="photoPreview" class="mt-2 flex justify-center"></div>
+            </div>
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="age">Âge</label>
+              <input id="age" name="age" type="number" placeholder="Entrez l'âge"
+                class="form-input w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5] placeholder:text-[#637888]" min="10" max="20" value="15" />
+            </div>
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="gender">Sexe</label>
+              <select id="gender" name="gender"
+                class="form-select w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5]">
+                <option value="">Sélectionnez le sexe</option>
+                <option value="1">Masculin</option>
+                <option value="0">Féminin</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="education">Niveau Scolaire</label>
+              <select id="education" name="education"
+                class="form-select w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5]">
+                <option value="">Sélectionnez le niveau</option>
+                <option value="1">6e</option>
+                <option value="2">5e</option>
+                <option value="3">4e</option>
+                <option value="4">3e</option>
+                <option value="5">2nde</option>
+                <option value="6">1ère</option>
+                <option value="7">Terminale</option>
+              </select>
+            </div>
+            <fieldset>
+              <legend class="block font-medium mb-2 text-[#111518]">Redoublement</legend>
+              <div class="flex gap-4">
+                <label class="flex items-center gap-2 cursor-pointer text-[#111518]" for="redoublement-oui">
+                  <input type="radio" id="redoublement-oui" name="redoublement" value="1" />
+                  Oui
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer text-[#111518]" for="redoublement-non">
+                  <input type="radio" id="redoublement-non" name="redoublement" value="0" />
+                  Non
+                </label>
+              </div>
+            </fieldset>
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="family">Situation Familiale</label>
+              <select id="family" name="family"
+                class="form-select w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5]">
+                <option value="">Sélectionnez la situation</option>
+                <option value="1">Orphelin</option>
+                <option value="2">Parents vivants</option>
+                <option value="3">Monoparental</option>
+              </select>
+            </div>
+            <div>
+                <label class="block font-medium mb-2 text-[#111518]" for="note_moyenne">Note Moyenne (sur 20)</label>
+                <input id="note_moyenne" name="note_moyenne" type="number" step="0.1" placeholder="Entrez la note moyenne"
+                    class="form-input w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5] placeholder:text-[#637888]" min="0" max="20" value="10.0" />
+            </div>
+            <div>
+                <label class="block font-medium mb-2 text-[#111518]" for="absences">Nombre d'Absences Annuel</label>
+                <input id="absences" name="absences" type="number" placeholder="Entrez le nombre d'absences"
+                    class="form-input w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5] placeholder:text-[#637888]" min="0" max="100" value="5" />
+            </div>
+            <div>
+                <label class="block font-medium mb-2 text-[#111518]" for="distance_ecole">Distance à l'École (km)</label>
+                <input id="distance_ecole" name="distance_ecole" type="number" step="0.1" placeholder="Entrez la distance"
+                    class="form-input w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5] placeholder:text-[#637888]" min="0" max="50" value="5.0" />
+            </div>
+            <fieldset>
+              <legend class="block font-medium mb-2 text-[#111518]">Accès Internet</legend>
+              <div class="flex gap-4">
+                <label class="flex items-center gap-2 cursor-pointer text-[#111518]" for="internet-oui">
+                  <input type="radio" id="internet-oui" name="internet" value="1" />
+                  Oui
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer text-[#111518]" for="internet-non">
+                  <input type="radio" id="internet-non" name="internet" value="0" />
+                  Non
+                </label>
+              </div>
+            </fieldset>
+            <div>
+              <label class="block font-medium mb-2 text-[#111518]" for="employment">Travail des Parents</label>
+              <select id="employment" name="employment"
+                class="form-select w-full h-12 rounded-lg border border-[#dce1e5] px-4 text-base focus:border-[#1990e5]">
+                <option value="">Sélectionnez le statut</option>
+                <option value="1">Petits métiers</option>
+                <option value="2">Fonctionnaire</option>
+                <option value="3">Chômage</option>
+              </select>
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" id="submitButton"
+                class="submit-button min-w-[84px] h-10 px-6 rounded-lg bg-[#1990e5] text-white font-bold text-sm tracking-wide hover:bg-[#1577c9] transition flex items-center justify-center">
+                <span>Prédire l'Abandon Scolaire</span>
+                <span id="spinner" class="loader hidden"></span>
+              </button>
+            </div>
+            <div id="predictionResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center hidden flex flex-col items-center justify-center"></div>
+            <div id="exportButtons" class="mt-4 flex justify-center gap-4 hidden">
+              <button type="button" id="exportWord" class="submit-button flex items-center gap-2"><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.25 2A2.75 2.75 0 0 1 20 4.75v14.5A2.75 2.75 0 0 1 17.25 22H6.75A2.75 2.75 0 0 1 4 19.25V4.75A2.75 2.75 0 0 1 6.75 2h10.5Zm-7.2 5.5-.97 5.1-.97-5.1H5.5l1.7 7.5h1.6l.97-5.1.97 5.1h1.6l1.7-7.5h-1.81l-.97 5.1-.97-5.1H10.05Zm7.45 0h-1.5v7.5h1.5V7.5Z"/></svg></span>Exporter en Word</button>
+              <button type="button" id="exportPDF" class="submit-button flex items-center gap-2"><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.25 2A2.75 2.75 0 0 1 20 4.75v14.5A2.75 2.75 0 0 1 17.25 22H6.75A2.75 2.75 0 0 1 4 19.25V4.75A2.75 2.75 0 0 1 6.75 2h10.5Zm-2.7 5.5a.75.75 0 0 0-.75.75v7.5a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75Zm-2.3 0a.75.75 0 0 0-.75.75v7.5a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75Zm-2.3 0a.75.75 0 0 0-.75.75v7.5a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75Z"/></svg></span>Exporter en PDF</button>
+            </div>
+            
+            <!-- Section Simulation -->
+            <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+              <h3 class="text-lg font-bold mb-3 text-blue-800 dark:text-blue-200 flex items-center gap-2">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                Simulation de scénarios
+              </h3>
+              <p class="text-sm text-blue-700 dark:text-blue-300 mb-4">
+                Testez différents scénarios pour voir leur impact sur le risque d'abandon scolaire.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <button id="saveScenario" class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                  Sauvegarder ce scénario
+                </button>
+                <button id="clearScenarios" class="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition">
+                  Effacer tous les scénarios
+                </button>
+              </div>
+              <div id="scenariosContainer" class="space-y-3">
+                <!-- Les scénarios sauvegardés apparaîtront ici -->
+              </div>
+            </div>
+          </form>
+          <div class="mt-8">
+            <h3 class="text-xl font-bold mb-2 text-center text-[#1990e5]">Historique des prédictions</h3>
+            <div class="flex justify-end mb-2">
+              <button id="exportHistoryCSV" class="submit-button flex items-center gap-2"><span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 20H5V4h7V2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/><path d="M21 2h-6c-.55 0-1 .45-1 1s.45 1 1 1h3.59l-9.83 9.83c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L20 5.41V9c0 .55.45 1 1 1s1-.45 1-1V3c0-.55-.45-1-1-1z"/></svg></span>Exporter l'historique en CSV</button>
+            </div>
+            <div id="historyContainer" class="overflow-x-auto"></div>
+            <div class="mt-8">
+              <canvas id="historyChart" height="120"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </body>
+</html>

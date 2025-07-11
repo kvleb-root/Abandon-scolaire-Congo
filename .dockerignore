@@ -1,0 +1,36 @@
+# Fichiers de développement
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers Git
+.git
+.gitignore
+
+# Fichiers Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation
+README.md
+*.md
+
+# Logs
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.temp 
