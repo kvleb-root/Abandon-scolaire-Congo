@@ -133,7 +133,7 @@ dmypy.json
 Thumbs.db
 
 # Model files (if they exist)
-*.pkl
+# *.pkl  # Commenté pour permettre l'inclusion du modèle
 *.joblib
 *.h5
 *.hdf5
